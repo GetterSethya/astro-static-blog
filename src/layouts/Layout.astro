@@ -1,0 +1,27 @@
+---
+import Header from "../components/Header.astro";
+import { ViewTransitions } from "astro:transitions";
+interface Props {
+    description?: string;
+    title: string;
+}
+
+const { title, description = "Blog pribadi saya" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <ViewTransitions />
+    </head>
+    <body class="min-h-screen bg-black text-zinc-300 px-10 lg:px-24">
+        <Header />
+        <slot />
+    </body>
+</html>

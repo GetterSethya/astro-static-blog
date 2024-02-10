@@ -1,0 +1,30 @@
+---
+interface Props {
+    slug: string;
+    imageSrc: string;
+    title: string;
+    descriptions: string;
+}
+
+const { slug, imageSrc, title, descriptions } = Astro.props;
+---
+
+<a
+    class="flex flex-col w-[720px] lg:w-1/2 gap-2 mx-auto mb-5 hover:text-white"
+    href={"/blog/" + slug}
+>
+    <img
+        transition:name={"image"+slug}
+        class="rounded mb-2.5 lg:object-cover lg:w-full"
+        width="720"
+        height="360"
+        src={imageSrc}
+        alt=""
+    />
+    <h4 transition:name={"title"+slug} class="text-4xl line-clamp-1">
+        {title}
+    </h4>
+    <p class="text-zinc-500 line-clamp-2">
+        {descriptions}
+    </p>
+</a>

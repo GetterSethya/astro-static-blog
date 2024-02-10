@@ -1,0 +1,38 @@
+---
+import type { GetStaticPaths } from "astro";
+import { CollectionEntry, getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export const getStaticPaths = (async () => {
+    const posts = await getCollection("posts");
+
+    return posts.map((post: any) => {
+        return {
+            params: { slug: post.slug },
+            props: post,
+        };
+    });
+}) satisfies GetStaticPaths;
+type Props = CollectionEntry<"posts">;
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title}>
+    <div class="prose prose-2xl mx-auto prose-invert">
+        <h1 transition:name={"title"+post.slug} class="pt-10">{post.data.title}</h1>
+        <div class="flex justify-between">
+            <p class="prose-sm">Ditulis oleh:{post.data.author}</p>
+            <p class="prose-sm">{post.data.date}</p>
+        </div>
+        <img
+            transition:name={"image"+post.slug}
+            class="mx-auto rounded w-full"
+            src={post.data.image}
+            width="720"
+            height="360"
+        />
+        <Content />
+    </div>
+</Layout>
